@@ -34,12 +34,12 @@ module Evercookie
 
     # Renders javascript with evercookie set script
     def set
-      @data = session[Evercookie.hash_name_for_set] || {key: '', value: ''}
+      @data = session[Evercookie.hash_name_for_set] || {:key => '', :value => ''}
     end
 
     # Renders javascript with evercookie get script
     def get
-      @data = session[Evercookie.hash_name_for_get] || {key: '', value: ''}
+      @data = session[Evercookie.hash_name_for_get] || {:key => '', :value => ''}
     end
 
     # Saves current evercookie value to session
@@ -86,11 +86,11 @@ module Evercookie
       response.headers["Cache-Control"] = "private, max-age=630720000"
 
       img_blob = image.to_blob(
-          {color_mode: ChunkyPNG::COLOR_TRUECOLOR,
-           compression: Zlib::DEFAULT_COMPRESSION}
+          {:color_mode => ChunkyPNG::COLOR_TRUECOLOR,
+           :compression => Zlib::DEFAULT_COMPRESSION}
       )
 
-      render text: img_blob, status: 200, content_type: 'image/png'
+      render :text => img_blob, :status => 200, :content_type => 'image/png'
     end
 
     # Renders page with etag header for evercookie js script
@@ -101,7 +101,7 @@ module Evercookie
       end
 
       response.headers["Etag"] = cookies[Evercookie.cookie_etag]
-      render text: cookies[Evercookie.cookie_etag]
+      render :text => cookies[Evercookie.cookie_etag]
     end
 
     # Renders page with cache header for evercookie js script
@@ -116,7 +116,7 @@ module Evercookie
       response.headers["Expires"] = "Tue, 31 Dec 2030 23:30:45 GMT"
       response.headers["Cache-Control"] = "private, max-age=630720000"
 
-      render text: cookies[Evercookie.cookie_cache]
+      render :text => cookies[Evercookie.cookie_cache]
     end
   end
 end
